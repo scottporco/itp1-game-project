@@ -50,8 +50,8 @@ function preload() {
 		jumpSound = loadSound('assets/jump.wav');
 		jumpSound.setVolume(0.1);
 
-		//Fall - Rpg by colorsCrimsonTears -- https://freesound.org/s/566204/ -- License: Creative Commons 0
-		fallDownCanyon = loadSound('assets/566204__colorscrimsontears__fall-rpg.wav');
+		//Retro short fall by MaoDin204 -- https://freesound.org/s/717685/ -- License: Creative Commons 0
+		fallDownCanyon = loadSound('assets/717685__maodin204__retro-short-fall.wav');
 		fallDownCanyon.setVolume(0.1);
 		
 		
@@ -59,12 +59,12 @@ function preload() {
 		coinPickup = loadSound('assets/taira-komori__coin.mp3');
 		coinPickup.setVolume(0.1);
 
-		// Lose_C_08 by cabled_mess -- https://freesound.org/s/350980/ -- License: Creative Commons 0
-		levelFailed = loadSound('assets/350980__cabled_mess__lose_c_08.wav');
+		// LushLife_GameOver.wav by SimonBay -- https://freesound.org/s/439890/ -- License: Attribution 3.0
+		levelFailed = loadSound('assets/439890__simonbay__lushlife_gameover.wav');
 		levelFailed.setVolume(0.1);
 
-		// Level win.wav by Tuudurt -- https://freesound.org/s/258142/ -- License: Creative Commons 0
-		levelWon = loadSound('assets/258142__tuudurt__level-win.wav');
+		// advance next level pixel game by CogFireStudios -- https://freesound.org/s/676805/ -- License: Creative Commons 0
+		levelWon = loadSound('assets/676805__cogfirestudios__advance-next-level-pixel-game.wav');
 		levelWon.setVolume(0.1);
 
 		// Waka 2 by DominikBraun -- https://freesound.org/s/483505/ -- License: Attribution 4.0
@@ -81,14 +81,21 @@ function setup() {
 	button = createButton();
 	startGame();
 	platForms.push( 
+		createPlatforms(-200, floorPos_y - 80, 200),
+		
 		createPlatforms(100, floorPos_y - 80, 200),
-		createPlatforms(325, floorPos_y - 125, 200),
-		createPlatforms(525, floorPos_y - 255, 200),
+		createPlatforms(325, floorPos_y - 160, 200),
+		createPlatforms(525, floorPos_y - 240, 200),
+		createPlatforms(1100, floorPos_y - 75, 75),
+		createPlatforms(1285, floorPos_y - 100, 75),
+
 	);
 
 	enemies.push(
-		new Enemy(840, floorPos_y-10, 100), 
-		new Enemy(100, floorPos_y-10, 100) 
+		new Enemy(90, floorPos_y+15, 50),
+		new Enemy(800, floorPos_y+15, 100), 
+		new Enemy(1000, floorPos_y+15, 200),
+		new Enemy(1290, floorPos_y+15, 200) 
 	);
 }
 
@@ -133,7 +140,7 @@ function draw()
 		let isContact = enemies[i].checkContact(gameChar_x,gameChar_y);
 		if(isContact)
 		{
-			if(game_lives > 0)
+			if(game_lives > 1)
 			{
 				enemyContact.play();
 				isPlummeting = true;
@@ -141,6 +148,8 @@ function draw()
 				noLoop(); 
 				tryAgain(); // restart game,
 				break;
+			}else {
+				gameOver(); // trigger game over modal
 			}
 		}
 	}
@@ -166,28 +175,19 @@ function draw()
 		characterIsStill(gameChar_x, gameChar_y, characterWidth, characterHeight); //Coming from character.js file see index.html
 	}
 
-	if(game_lives <= 0) {
-		levelFailed.play();
-		gameOver();
-	}
 
 	if(game_lives >= 0 && flagPoll.isReached){
 		LevelComplete();
 	}
 
-
-
-
 	pop();
 	fill(255);
 	noStroke();
-
 
 	fill('black');
 	noStroke();
 	text("Score: " + game_score, 20 , 20)
 	text("Lives: " + deductLives(0), width - 75 , 20)
-
 
 
 	///////////INTERACTION CODE//////////
@@ -230,7 +230,6 @@ function deductLives(life) {
 	if(life > 0){
 		game_lives -= life;
 	}
-	console.log(game_lives);
 	return game_lives
 }
 
@@ -246,7 +245,7 @@ function keyPressed() {
 			isRight = true;
 		} else if((keyCode === 87 || keyCode === 32 || keyCode === 38) && !isFalling) { //Jumping conditional
 			jumpSound.play();
-			gameChar_y -= 200;
+			gameChar_y -= 150;
 		}
 	}
 }
@@ -283,7 +282,7 @@ function drawCollectable(t_collectable){
 
 }
 function checkCollectable(t_collectable) {
-	if (dist(gameChar_x, gameChar_y, t_collectable.x_pos, t_collectable.y_pos) < t_collectable.size) {
+	if (dist(gameChar_x, gameChar_y, t_collectable.x_pos, t_collectable.y_pos) < t_collectable.size+10) {
 		t_collectable.isFound = true;
 		game_score+=1;
 		coinPickup.play();
@@ -342,17 +341,21 @@ function checkPlayerDie(t_canyon) {
 		gameChar_y += 300;
 		isPlummeting = true;
 		if (isPlummeting) {
-			if (game_lives > 0) {
+			if (game_lives > 1) {
 				fallDownCanyon.play();
 				noLoop(); 
 				tryAgain(); // restart game
 				return true;
+			} else{
+				gameOver(); // trigger game over modal
 			}
 		}
 	}
 }
 
 function gameOver(){
+		noLoop();
+		// CREATE MODAL BOX WITH INSTRUCTIONS
 		fill(200);
 		rectMode(CENTER);
 		rect(gameChar_x, height/2, 250, 150);
@@ -360,18 +363,25 @@ function gameOver(){
 		noStroke();
 		textAlign(CENTER);
 		text('YOU LOOSE', gameChar_x, height/2 );
-
 		button.show();
 		button.html('Restart Level?')
 		button.position(width/2-45, height/2+20);
-	
+		// PLAY LEVEL FAILED SOUND
+		// KILL DRAW LOOP
+		levelFailed.play();
+		
+		// IF BUTTON IS PRESSED RESTART GAME
 		button.mousePressed(()=>{
 			startGame();
-			levelFailed.stop();
+			loop();
 		})
 }
 
 let LevelComplete = () => {
+
+	noLoop();
+	levelWon.play();
+
 	fill('green');
 	rectMode(CENTER);
 	rect(gameChar_x, height/2, 250, 150);
@@ -384,8 +394,10 @@ let LevelComplete = () => {
 	button.show();
 	button.html('Play Again?')
 	button.position(width/2-45, height/2+20);
+
 	button.mousePressed(()=>{
 		startGame();
+		loop();
 	})
 }
 
@@ -408,26 +420,24 @@ function renderFlagPoll() {
 function checkFlagPole(){
 	const d = abs(gameChar_x - flagPoll.x_pos);
 	if(d < 15) {
-		levelWon.play();
 		flagPoll.isReached = true;
 	}
 }
 
 function tryAgain() {
 	deductLives(1);
-
+	keyCode = '';
+	isLeft=false;
+	isRight=false;
 	setTimeout(()=>{
-
-	floorPos_y = height * 3/4;
-	gameChar_x = width/2;
-	gameChar_y = floorPos_y;
-	game_lost = false;
-	isPlummeting = false;
-	button.hide();
-
+		floorPos_y = height * 3/4;
+		gameChar_x = width/2;
+		gameChar_y = floorPos_y;
+		game_lost = false;
+		isPlummeting = false;
+		button.hide();
 		loop();
 	}, 1500)
-
 }
 
 function startGame() {
@@ -442,36 +452,40 @@ function startGame() {
 	game_score = 0;
 	game_lives = 3;
 	game_lost = false;
+
 	flagPoll = {
 		isReached:false,
-		x_pos: 1500
+		x_pos: 3000
 	}
 
 	button.hide();
 }
 
 
-function createPlatforms(x,y,length) {
- var p = {
-	x: x,
-	y: y,
-	length: length,
-	draw: function(){
-		fill(255,0, 255);
-		rect(this.x, this.y, this.length, 20);
-	},
-	checkContact: function(gc_X, gc_Y){
-		if(gc_X > this.x && gc_X < this.x + this.length){
-			let d = this.y - gc_Y;
-			if(d >= 0 && d < 50) {
-				console.log("ON PLATFORM");
-				return true;
-			} else {
-				return false;
+function createPlatforms(x,y,length) 
+{
+	var p = {
+		x: x,
+		y: y,
+		length: length,
+		draw: function(){
+			fill(255,0, 255);
+			rect(this.x, this.y, this.length, 20);
+		},
+		checkContact: function(gc_X, gc_Y){
+			if(gc_X > this.x && gc_X < this.x + this.length){
+				
+				let d = this.y - gc_Y-50;
+				
+				if(d >= 0 && d < 5) {
+					return true;
+				} else {
+					return false;
+				}
+
 			}
 		}
 	}
- }
  return p;
 }
 
@@ -490,13 +504,11 @@ function Enemy(x, y, range)
 		if(this.currentX >= this.x + this.range)
 		{
 			this.inc = -1;
-			enemiesDirection = 'left';
 
 		} 
 		else if(this.currentX < this.x )
 		{
 			this.inc = 1;
-			enemiesDirection = 'right';
 		}
 	}
 
