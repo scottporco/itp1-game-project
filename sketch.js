@@ -107,15 +107,15 @@ function setup() {
 	)
 
 	enemies.push(
-		// new Enemy(850, floorPos_y - 100, 100, true),
-		// new Enemy(875, floorPos_y - 330, 400, false),
-		// new Enemy(1100, floorPos_y - 10, 150, false),
-		// new Enemy(1800, floorPos_y + 15, 25, false),
-		// new Enemy(1800, floorPos_y - 200, 20, false),
-		// new Enemy(1950, floorPos_y - 200, 300, true),
-		// new Enemy(2300, floorPos_y - 200, 500, false),
-		// new Enemy(2300, floorPos_y - 100, 500, false),
-		// new Enemy(2500, floorPos_y - 5, 300, false),
+		new Enemy(850, floorPos_y - 100, 100, true),
+		new Enemy(875, floorPos_y - 330, 400, false),
+		new Enemy(1100, floorPos_y - 10, 150, false),
+		new Enemy(1800, floorPos_y + 15, 25, false),
+		new Enemy(1800, floorPos_y - 200, 20, false),
+		new Enemy(1950, floorPos_y - 200, 300, true),
+		new Enemy(2300, floorPos_y - 200, 500, false),
+		new Enemy(2300, floorPos_y - 100, 500, false),
+		new Enemy(2500, floorPos_y - 5, 300, false),
 	);
 }
 
