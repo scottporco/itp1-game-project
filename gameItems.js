@@ -4,76 +4,67 @@ getItems = function() {
     treePos_y = floorPos_y/2+16;
     collectables = [
         {
-            x_pos: random(-1300, 2000),
-            y_pos: random(285, 399),
+            x_pos: 260,
+            y_pos: floorPos_y - 110,
+            size: 50,
+            isFound: false,
+        },
+        {
+            x_pos: 460,
+            y_pos: floorPos_y - 195,
+            size: 50,
+            isFound: false,
+        },
+        {
+            x_pos: 680,
+            y_pos: floorPos_y - 290,
             size: 50,
             isFound: false,
         },
 
         {
-            x_pos: random(-1300, 2000),
-            y_pos: random(285, 399),
+            x_pos: 1000,
+            y_pos: floorPos_y - 350,
             size: 50,
             isFound: false,
         },
         {
-            x_pos: random(-1300, 2000),
-            y_pos: random(285, 399),
+            x_pos: 1100,
+            y_pos: floorPos_y - 350,
             size: 50,
             isFound: false,
         },
         {
-            x_pos: random(-1300, 2000),
-            y_pos: random(285, 399),
+            x_pos: 1550,
+            y_pos: floorPos_y - 100,
             size: 50,
             isFound: false,
         },
         {
-            x_pos: random(-1300, 2000),
-            y_pos: random(285, 399),
-            size: 50,
-            isFound: false,
-        },	{
-            x_pos: random(-1300, 2000),
-            y_pos: random(285, 399),
-            size: 50,
-            isFound: false,
-        },	{
-            x_pos: random(-1300, 2000),
-            y_pos: random(285, 399),
-            size: 50,
-            isFound: false,
-        },	{
-            x_pos: random(-1300, 2000),
-            y_pos: random(285, 399),
-            size: 50,
-            isFound: false,
-        },	{
-            x_pos: random(-1300, 2000),
-            y_pos: random(285, 399),
-            size: 50,
-            isFound: false,
-        },	{
-            x_pos: random(-1300, 2000),
-            y_pos: random(285, 399),
-            size: 50,
-            isFound: false,
-        },	{
-            x_pos: random(-1300, 2000),
-            y_pos: random(285, 399),
-            size: 50,
-            isFound: false,
-        },	{
-            x_pos: random(-1300, 2000),
-            y_pos: random(285, 399),
-            size: 50,
-            isFound: false,
-        },	{
-            x_pos: random(-1300, 2000),
-            y_pos: random(285, 399),
+            x_pos: 1780,
+            y_pos: floorPos_y - 80,
             size: 50,
             isFound: false,
         },
+        {
+            x_pos: 2400,
+            y_pos: floorPos_y - 20,
+            size: 50,
+            isFound: false,
+        },
+        {
+            x_pos: 2850,
+            y_pos: floorPos_y - 30,
+            size: 50,
+            isFound: false,
+        },
+        {
+            x_pos: 2850,
+            y_pos: floorPos_y - 300,
+            size: 50,
+            isFound: false,
+        }
+
     ];
     clouds = [
         {
@@ -273,61 +264,4 @@ getItems = function() {
             snowCord3Y: 200
         }
     ]
-    canyons = [
-        {
-            x_pos: -1000,
-            y_pos: 432,
-            width: random(75, 90),
-            height: 150,
-        },
-        {
-            x_pos: -500,
-            y_pos: 432,
-            width: random(75, 90),
-            height: 150,
-        },
-        {
-            x_pos: 0,
-            y_pos: 432,
-            width: random(75, 90),
-            height: 150,
-        },
-        {
-            x_pos: 150,
-            y_pos: 432,
-            width: random(75, 90),
-            height: 150,
-        },
-        {
-            x_pos: 900,
-            y_pos: 432,
-            width: random(75, 90),
-            height: 150,
-        },
-        {
-            x_pos: 1200,
-            y_pos: 432,
-            width: random(75, 90),
-            height: 150,
-        },
-        {
-            x_pos: 1500,
-            y_pos: 432,
-            width: random(75, 90),
-            height: 150,
-        },
-        {
-            x_pos: 2000,
-            y_pos: 432,
-            width: random(75, 90),
-            height: 150,
-        },
-        {
-            x_pos: 700,
-            y_pos: 432,
-            width: random(75, 90),
-            height: 150,
-        },
-
-    ];
 }
