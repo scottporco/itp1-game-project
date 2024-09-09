@@ -78,8 +78,10 @@ function preload() {
 
 function setup() {
 	/* Set up section */
-	createCanvas(1024, 576);
+	var canvas = createCanvas(1024, 576);
 	button = createButton();
+	canvas.parent('sketchWrapper');
+	button.parent("sketchWrapper");
 	startGame();
 
 
@@ -335,33 +337,30 @@ function drawTrees() {
 
 function gameOver() {
 	push();
-	fill(0, 180);  // black with 50% transparency
-	rect(0, 0, width, height);
-
-	// CREATE MODAL BOX WITH INSTRUCTIONS
-	fill(136, 8, 8);
-	rectMode(CENTER);
-	rect(width / 2 - 45, height / 2, 300, 150);
-	fill(255, 255, 255);
-	noStroke();
-	textAlign(CENTER);
-	text('GAME OVER! YOU LOOSE!', width / 2 - 45, height / 2 - 10);
-	button.show();
-	button.html('Want to give this level another shot?')
-	button.position(width / 2 - 160, height / 2 + 20);
-	// PLAY LEVEL FAILED SOUND
-	if (!levelFailed._playing) {
-		levelFailed.play();
-	}
-
-	// KILL DRAW LOOP
-	noLoop();
-
-	// IF BUTTON IS PRESSED RESTART GAME
-	button.mousePressed(() => {
-		startGame();
-		loop();
-	})
+		fill(0, 180);  // black with 50% transparency
+		rect(0, 0, width, height);
+		// CREATE MODAL BOX WITH INSTRUCTIONS
+		fill(136, 8, 8);
+		rectMode(CENTER);
+		rect(width / 2 - 45, height / 2, 300, 150);
+		fill(255, 255, 255);
+		noStroke();
+		textAlign(CENTER);
+		text('GAME OVER! YOU LOOSE!', width / 2 - 45, height / 2 - 10);
+		button.show();
+		button.html('Want to give this level another shot?')
+		button.position(352,-270, 'relative');
+		// PLAY LEVEL FAILED SOUND
+		if (!levelFailed._playing) {
+			levelFailed.play();
+		}
+		// KILL DRAW LOOP
+		noLoop();
+		// IF BUTTON IS PRESSED RESTART GAME
+		button.mousePressed(() => {
+			startGame();
+			loop();
+		})
 	pop();
 }
 
@@ -385,8 +384,9 @@ function levelComplete() {
 	text('Your game score is : ' + round((game_score / 10) * 100) + ' percent', width / 2 - 45, height / 2);
 
 	button.show();
-	button.html('Play Again?')
-	button.position(width / 2 - 88, height / 2 + 20);
+	button.html('Play Again?');
+
+	button.position(425,-255, 'relative');
 
 	button.mousePressed(function () {
 		startGame();
