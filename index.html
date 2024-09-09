@@ -10,8 +10,42 @@
     <script src="gameItems.js"></script>
     <script src="sketch.js"></script>
 
-    <style> body {padding: 0; margin: 0;} </style>
+    <style>
+      body {padding: 0; margin: 0; background-color: black}
+      div.title-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      main {
+        display: block;
+        width: 100%;
+      }
+      .sketch {
+          display: block;
+          position: relative;
+          margin: 0 auto;
+          width: 1024px;
+      }
+      canvas {
+        width: 1024px;
+        height: 576px;
+        display: block;
+        margin: 0 auto 0 auto;
+      }
+      h1 {
+        color: #fff;
+        font-size: 4em;
+        text-align: center;
+        font-family: sans-serif;
+      }
+    </style>
   </head>
   <body>
+      <div class="title-box">
+        <h1>Retro Jumper Game</h1>
+      </div>
+      <div id="sketchWrapper" class="sketch">
+      </div>
   </body>
 </html>

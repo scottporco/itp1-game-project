@@ -1,66 +1,63 @@
-### The Game Project 6 – Adding game mechanics
+# Game Project: Base Game and Extensions
 
-This week’s project builds upon the sketch from last week. Before
-starting this project make sure you have completed all steps from last
-week and tested your game thoroughly.
+## Overview
 
-Create a copy of your sketch directory from last week and rename it to
-something like `game-project-6`. Keep your completed project from last
-week safe as a reference, and make the following changes to the code
-in your new game directory.
+This project involves the creation of a fully functional, bug-free game with several required features and optional extensions. The main tasks involve player interaction, level design, aesthetics, and ensuring the code is well-structured and error-free.
 
+### Base Game Requirements:
 
-1. Add a score counter [1 marks]
-	- create a global variable called `game_score`
-	- increment `game_score` by one each time the character collects an item.
-	- use the text function to draw the score on the screen.
+The base game must include the following features:
+1. **Player Interaction**: Ensure the player can control the character smoothly with responsive controls.
+2. **Canyons & Coins Interaction**: Implement the interaction between the player, canyons, and coins. Players should be able to collect coins and interact with canyons accordingly.
+3. **Scrollable Game World**: Implement a scrollable game world that moves as the player progresses.
+4. **Score and Lives Counters**: Display the player's score and number of lives on the screen. Update these based on game events.
+5. **Game Over States**: Include logic to end the game when conditions are met (e.g., when the player loses all lives).
 
-2. Add a flagpole [1 marks]
-	- We need to add an end to your level. I have chosen a flagpole but you can chose according to the theme of your game.
-	- Initialise an object called `flagpole`, it should at least have the properties `x_pos` and `isReached`.
-	- set `isReached` to `false` and `x_pos` to a world position at the very end of your level.
-	- create a function called `renderFlagpole` and call this from the draw function
-	- complete the function to draw your flagpole in two states. One for when `isReached` is false,
-	and one for when it is `true`
+### Aesthetics and Gameplay:
 
-3. Flagpole checking function [1 marks]
-	- create a function called `checkFlagpole`
-	- call the function from `draw`, but write a conditional so that `checkFlagpole` is only called when `flagpole.isReached` is `false`
-	- in `checkFlagpole` write a conditional such that when the gameChar is in range of the flagpole
-	its `isReached` property is set to `true`
+In addition to functionality, the gameplay and aesthetics are important and will be graded. You can score highly by:
+- **Challenging Level Design**: Make the game engaging and challenging for players.
+- **Coherent Graphics and Animations**: Use visually appealing and consistent graphics and animations throughout the game.
+- **Well-Tweaked Player Controls**: Ensure that player controls (e.g., jumping) are finely tuned for smooth gameplay.
+- **Bug-Free Game**: Make sure the game is bug-free and functions as intended.
 
-4. Add lives [2 marks]
-	- Your character should begin with three lives, and each time they fall down a canyon the game
-	 should reset and their remaining lives decrement by one.
-	- Create a global variable `lives`, and initialise it to `3` within `setup`.
-	- Create a function called `checkPlayerDie`. Call this within draw.
-	- In this function define a conditional statement that tests if your character has fallen below
-	the bottom of the canvas. When this is `true`, decrement the `lives` counter by one
-	- Create a new function called `startGame()`.
-	- Move everything from `setup` except `createCanvas` and the initialisation of `floorPos_y` and
-	`lives` into this new function.
-	- At the end of your now very short `setup` function call `startGame()`.
-	- In `checkPlayerDie` create a conditional statement to test if the player has
-	used all of their lives. If there are lives remaining call `startGame`.
-	- Write some code using a `for` loop to draw life tokens onto the screen so that you
-	can keep track of how many lives you have remaining.
+### Code Quality:
 
-5. "Game over" and "Level complete" text [2 marks]
-	- In the draw loop, after your drawing code and before your game logic
-	code, write two conditional statements
-	- The first displays "Game over. Press space to continue."
-	when `lives` is less than 1.
-	- The other displays "Level complete. Press space to continue." when
-	`flagpole.isReached` is true
-	- For each conditional you should return at the end of the statement. This
-	prevents any further game logic from happening when play is over.
+You will be graded on the quality of your code. Make sure to review and improve the following:
+- **Indentation & Whitespace**: Properly use indentation and whitespace (empty lines and spaces).
+- **Inline Comments**: Include relevant inline comments, but avoid leaving commented-out code in the final submission.
+- **Consistent Variable Naming**: Use consistent and logical names for variables.
+- **Code Organization**: Organize your code efficiently.
+- **Avoid Redundancy**: Ensure there are no implicitly declared or redundant variables, declarations, or assignments.
+- **Appropriate Use of Local/Global Variables**: Use local and global variables appropriately.
+- **Correct Array Traversal**: Implement array traversal properly.
+- **Data Structures & Functions**: Use rational design in your data structures and functions.
+- **Clear Conditional Logic**: Implement conditional logic clearly and simply.
+- **Anchored Game Elements**: Ensure that game elements are properly anchored.
 
+Refer to the code philosophy videos such as "The Debugger's Mindset," "Testing," and "The Elegant Coder" for guidance.
 
-	6. Tidy your code [3 marks]
-	- make sure your code is elegant
-		- remove all commented blocks of code
-		- check all indentations
-		- make your variable names consistent
-		- remove any redundant code
-		- refactor unwieldy drawing code
-		- break up long commands onto multiple lines
+## Extensions:
+
+After completing the base game, you can add up to three extensions. Each extension will be graded based on functionality, creativity, and ambition.
+
+### Available Extensions:
+
+1. **Add Sounds**: Use the `p5.sound` library to add sound effects to your game. Follow the tutorial from the topic to implement this.
+2. **Create Platforms**: Use the factory pattern to create platforms. This allows the game to generate platforms dynamically.
+3. **Create Enemies**: Use a constructor function to create enemies. Enemies should have distinct behaviors and interact with the player.
+
+You are free to enhance these extensions beyond the basic implementation covered in the tutorials. You can use advanced techniques, such as ES6 syntax and code modularization, but these are optional and should be used consistently to demonstrate understanding.
+
+## Deliverables:
+
+You are required to submit the following in a compressed `.zip` file:
+1. **Final Game Project Code**: Include all the code needed to run the game.
+2. **Assets**: Include all necessary assets, such as HTML files, library files, images, sound files, etc.
+3. **Commentary (PDF format, ~250 words)**: Provide a commentary describing the following:
+   - Your chosen extension(s)
+   - Challenges and difficulties encountered
+   - Skills you learned or practiced while completing the project
+
+--- 
+
