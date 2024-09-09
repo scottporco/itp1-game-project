@@ -401,7 +401,6 @@ function levelComplete() {
 		}
 	}, 750)
 
-
 }
 
 
@@ -467,7 +466,7 @@ function startGame() {
 
 
 function createPlatforms(x, y, length) {  //factory pattern follwed in course
-	var p = {
+	return {
 		x: x,
 		y: y,
 		length: length,
@@ -480,16 +479,11 @@ function createPlatforms(x, y, length) {  //factory pattern follwed in course
 
 				var d = this.y - gc_Y - 50;
 
-				if (d >= 0 && d < 5) {
-					return true;
-				} else {
-					return false;
-				}
+				return d >= 0 && d < 5;
 
 			}
 		}
-	}
-	return p;
+	};
 }
 
 function Enemy(x, y, range, incrementY = false) { //Capital E because it's a constructor
@@ -529,10 +523,8 @@ function Enemy(x, y, range, incrementY = false) { //Capital E because it's a con
 	}
 	this.checkContact = function (gc_X, gc_Y) {
 		var d = dist(gc_X, gc_Y, this.currentX, this.currentY)
-		if (d < 50) {
-			return true;
-		}
-		return false;
+		return d < 50;
+
 	}
 }
 
@@ -559,7 +551,7 @@ function Collectable(t_collectable) {  //Capital C because it's a constructor
 }
 
 function createCanyons(t_canyon) {  //factory pattern
-	var c = {
+	return {
 		t_canyon: t_canyon,
 		draw: function () {
 			// Draw the t_canyon
@@ -584,8 +576,7 @@ function createCanyons(t_canyon) {  //factory pattern
 				}
 			}
 		}
-	}
-	return c;
+	};
 }
 
 
