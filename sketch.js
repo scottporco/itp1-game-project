@@ -1,5 +1,6 @@
 /*
-* The Game Project Part 6
+* Coursework 2.2 Game project submission [002]
+* Base Game and Extensions Commentary
 * Scott Bertrand Porco
 * Student number: 240273471
 */
@@ -499,7 +500,7 @@ function Enemy(x, y, range, incrementY = false) { // CAPITAL E BECAUSE IT’S A 
 	}
 	this.draw = function () {
 		this.update();
-		drawBat(this.currentX, this.currentY); // DRAW BAT ENEMY
+		drawBat(this.currentX, this.currentY); // DRAW ENEMY BATS SEE character.js FOR drawBat() REFERENCE.
 	}
 	this.checkContact = function (gc_X, gc_Y) {
 		var d = dist(gc_X, gc_Y, this.currentX, this.currentY)
