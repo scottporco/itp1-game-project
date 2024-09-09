@@ -44,10 +44,10 @@ var enemyContact;
 
 function preload() {
 
+	//LOAD SOUNDS
 	soundFormats('mp3', 'wav')
 
-	//LOAD SOUNDS
-
+	// Source unknown, provided by UoL in Coursera course material
 	jumpSound = loadSound('assets/jump.wav');
 	jumpSound.setVolume(0.1);
 
@@ -80,11 +80,12 @@ function setup() {
 	/* Set up section */
 	var canvas = createCanvas(1024, 576);
 	button = createButton();
-	canvas.parent('sketchWrapper');
-	button.parent("sketchWrapper");
-	startGame();
+	canvas.parent('sketchWrapper'); // WRAPS HTML CANVAS IN A <DIV> WITH AN ID OF #sketchWrapper
+	button.parent("sketchWrapper"); // WRAPS BUTTON TAG INSIDE <DIV> ID #sketchWrapper SO WE CAN POSITION IT RELATIVE TO THE DIV.
 
+	startGame(); // RUNS THE START GAME FUNCTION
 
+	// BUILD platforms ARRAY
 	platForms.push(
 		createPlatforms(100, floorPos_y - 80, 200),
 		createPlatforms(325, floorPos_y - 160, 200),
@@ -94,20 +95,20 @@ function setup() {
 		createPlatforms(1285, floorPos_y - 100, 75),
 		createPlatforms(1270, floorPos_y - 200, 75),
 		createPlatforms(1270, floorPos_y - 200, 75),
-
 		createPlatforms(2800, floorPos_y - 100, 105),
 		createPlatforms(2800, floorPos_y - 200, 105),
 	);
 
+	// BUILD canyons ARRAY
 	canyons.push(
 		createCanyons({ x_pos: 150, y_pos: 432, width: random(75, 90), height: 150, }),
 		createCanyons({ x_pos: 150, y_pos: 432, width: random(75, 90), height: 150, }),
 		createCanyons({ x_pos: 650, y_pos: 432, width: random(75, 90), height: 150, }),
 		createCanyons({ x_pos: 1500, y_pos: 432, width: random(75, 90), height: 150 }),
 		createCanyons({ x_pos: 2200, y_pos: 432, width: random(75, 90), height: 150 }),
-
 	)
 
+	// BUILD enemies ARRAY
 	enemies.push(
 		new Enemy(850, floorPos_y - 100, 100, true),
 		new Enemy(875, floorPos_y - 330, 400, false),
@@ -122,10 +123,9 @@ function setup() {
 }
 
 function draw() {
+	/* START THE DRAW LOOP */
 	cameraPosX = -gameChar_x + (width / 2); //Set Cameras position
-
 	background(100, 155, 255); //fill the sky blue
-
 	noStroke();
 	fill(0, 155, 0);
 	rect(0, floorPos_y, width, height - floorPos_y); //draw green ground
@@ -140,11 +140,11 @@ function draw() {
 	renderFlagPoll();
 	checkFlagPole();
 
-	for (var i = 0; i < platForms.length; i++) {
+	for (var i = 0; i < platForms.length; i++) { // DRAW PLATFORMS
 		platForms[i].draw();
 	}
 
-	for (var i = 0; i < collectables.length; i++) { // loop through collectable for collectable placements
+	for (var i = 0; i < collectables.length; i++) { // DRAW COLLECTABLES
 		if (!collectables[i].isFound) {
 			var collectable = new Collectable(collectables[i]);
 			collectable.draw();
@@ -152,14 +152,14 @@ function draw() {
 		}
 	}
 
-	for (var i = 0; i < canyons.length; i++) {
+	for (var i = 0; i < canyons.length; i++) { // DRAW CANYONS
 		canyons[i].draw();
 		if (!isPlummeting && !isFalling) {
 			canyons[i].checkContact();
 		}
 	}
 
-	for (var i = 0; i < enemies.length; i++) {
+	for (var i = 0; i < enemies.length; i++) { // DRAW ENEMIES
 		enemies[i].draw();
 		var isContact = enemies[i].checkContact(gameChar_x, gameChar_y);
 		if (isContact) {
@@ -174,8 +174,8 @@ function draw() {
 		}
 	}
 
-	//the game character
-	//Coming from character.js file see index.html
+	// SET UP THE GAME CHARACTER AND IT'S POSITIONING.
+	// TO KEEP THE DRAW FUNCTION MORE COMPACT ALL CHARACTER CODE IS NOW IN Character.js FILE SEE index.html FOR LOADING
 	if (isLeft && isFalling) {
 		characterIsJumpingLeft(gameChar_x, gameChar_y, characterWidth, characterHeight);
 	}
@@ -246,34 +246,23 @@ function draw() {
 		gameOver(); //END GAME
 	}
 
-	
-
 } // END DRAW LOOP
 
 
-function deductLives(life) {
-	if (life > 0) {
-		game_lives -= life;
-	}
-	return game_lives
-}
-
-
 function keyPressed() {
-	// if statements to control the animation of the character when
-	// keys are pressed.
-	// I added extra keys for jumping here, i.e. space bar & up arrow,
+	// Conditional statements to control the animation of the character when keys are pressed.
 	if (!isPlummeting) {
 		if (keyCode === 37) { // Move left
 			isLeft = true;
 		} else if (keyCode === 39) { // Move Right
 			isRight = true;
-		} else if ((keyCode === 87 || keyCode === 32 || keyCode === 38) && !isFalling) { //Jumping conditional
+		} else if ((keyCode === 87 || keyCode === 32 || keyCode === 38) && !isFalling) { // Jumping conditional
 			jumpSound.play();
 			gameChar_y -= 150;
 		}
 	}
 }
+
 function keyReleased() {
 	// if statements to control the animation of the character when
 	// keys are released.
@@ -285,6 +274,7 @@ function keyReleased() {
 		}
 	}
 }
+
 function drawClouds() {
 	for (var i = 0; i < clouds.length; i++) { // Draw clouds in for-loop
 		fill(255); // White color for the cloud
@@ -298,7 +288,7 @@ function drawClouds() {
 }
 
 function drawMountains() {
-	for (var i = 0; i < mountains.length; i++) { // Draw mountain in for-loop
+	for (var i = 0; i < mountains.length; i++) { // DRAW MOUNTAIN FOR-LOOP
 		fill(110, 110, 110);
 		triangle(
 			mountains[i].x,
@@ -308,7 +298,7 @@ function drawMountains() {
 			mountains[i].x3,
 			mountains[i].y2
 		);
-		fill(255); // Draw snow on the peak
+		fill(255); // DRAW SNOW CAPS ON PEAKS
 		triangle(
 			mountains[i].snowCord1X,
 			mountains[i].snowCord1Y,
@@ -321,23 +311,22 @@ function drawMountains() {
 	}
 }
 function drawTrees() {
-	for (var i = 0; i < trees_x.length; i++) { // Trees in for-loop
+	for (var i = 0; i < trees_x.length; i++) { // TREES IN FOR-LOOP
 		// Draw tree trunk
-		fill(139, 69, 19); // Brown color for the trunk
-		rect(200 + trees_x[i], treePos_y, 40, 200); // Rectangle for the trunk
+		fill(139, 69, 19); // BROWN COLOR FOR THE TREE TRUCKS
+		rect(200 + trees_x[i], treePos_y, 40, 200); // TREE TRUCKS
 
 		// Draw tree leaves
 		fill(34, 139, 34); // Green color for the leaves
-		ellipse(220 + trees_x[i], treePos_y, 250, 250); // Circle for the top part of the tree
-		ellipse(170 + trees_x[i], treePos_y, 250, 200); // Circle for the left part of the tree
-		ellipse(270 + trees_x[i], treePos_y, 250, 200); // Circle for the right part of the tree
-		/** END code "personally wrote without assistance" **/
+		ellipse(220 + trees_x[i], treePos_y, 250, 250); // TOP TREE LEAVES/BRANCHES
+		ellipse(170 + trees_x[i], treePos_y, 250, 200); // LEFT TREE LEAVES/BRANCHES
+		ellipse(270 + trees_x[i], treePos_y, 250, 200); // RIGHT TREE LEAVES/BRANCHES
 	}
 }
 
 function gameOver() {
 	push();
-		fill(0, 180);  // black with 50% transparency
+		fill(0, 180);  // BLACK WITH APPROX 70% TRANSPARENCY
 		rect(0, 0, width, height);
 		// CREATE MODAL BOX WITH INSTRUCTIONS
 		fill(136, 8, 8);
@@ -366,43 +355,36 @@ function gameOver() {
 
 function levelComplete() {
 	push();
-	fill(0, 180);  // black with 50% transparency
+	fill(0, 180);  // BLACK WITH APPROX 70% TRANSPARENCY
 	rect(0, 0, width, height);
-
 	stroke(255, 255, 255);
 	strokeWeight(4);
 	fill('green');
 	rectMode(CENTER);
 	rect(width / 2 - 45, height / 2, 300, 200);
-
 	fill('white');
 	noStroke();
 	textAlign(CENTER);
-
 	text('Success You Beat the Level', width / 2 - 45, height / 2 - 40);
 	text('You collected: ' + game_score + ' coins and have ' + game_lives + " remaining", width / 2 - 45, height / 2 - 20);
 	text('Your game score is : ' + round((game_score / 10) * 100) + ' percent', width / 2 - 45, height / 2);
-
 	button.show();
 	button.html('Play Again?');
-
 	button.position(425,-255, 'relative');
-
 	button.mousePressed(function () {
 		startGame();
 		loop();
 	})
 	pop();
-
 	setTimeout(function () {
+		// KILL DRAW LOOP
 		noLoop();
-		if (!levelWon._playing) {
-			levelWon.play();
+		if (!levelWon._playing) { // CHECK IF SOUND IS ALREADY PLAYING
+			levelWon.play(); // LEVEL WON SOUND
 		}
 	}, 750)
 
 }
-
 
 function renderFlagPoll() {
 	push();
@@ -416,7 +398,6 @@ function renderFlagPoll() {
 	} else {
 		rect(flagPoll.x_pos, floorPos_y - 50, 100, 50);
 	}
-
 	pop();
 }
 
@@ -425,6 +406,13 @@ function checkFlagPole() {
 	if (d < 15) {
 		flagPoll.isReached = true;
 	}
+}
+
+function deductLives(life) {
+	if (life > 0) {
+		game_lives -= life;
+	}
+	return game_lives
 }
 
 function tryAgain() {
@@ -451,7 +439,7 @@ function startGame() {
 	isRight = false;
 	isFalling = false;
 	isPlummeting = false;
-	getItems(); //Check gameItems.js file for all the map items.
+	getItems(); // CHECK gameItems.js FILE FOR ALL THE MAP ITEMS.
 	game_score = 0;
 	game_lives = 3;
 	game_lost = false;
@@ -460,12 +448,10 @@ function startGame() {
 		isReached: false,
 		x_pos: 3000
 	}
-
 	button.hide();
 }
 
-
-function createPlatforms(x, y, length) {  //factory pattern follwed in course
+function createPlatforms(x, y, length) {  // FACTORY PATTERN FOLLOWED IN COURSE
 	return {
 		x: x,
 		y: y,
@@ -476,17 +462,14 @@ function createPlatforms(x, y, length) {  //factory pattern follwed in course
 		},
 		checkContact: function (gc_X, gc_Y) {
 			if (gc_X > this.x && gc_X < this.x + this.length) {
-
 				var d = this.y - gc_Y - 50;
-
 				return d >= 0 && d < 5;
-
 			}
 		}
 	};
 }
 
-function Enemy(x, y, range, incrementY = false) { //Capital E because it's a constructor
+function Enemy(x, y, range, incrementY = false) { // CAPITAL E BECAUSE IT’S A CONSTRUCTOR FUNCTION
 	this.x = x;
 	this.y = y;
 	this.range = range;
@@ -494,7 +477,6 @@ function Enemy(x, y, range, incrementY = false) { //Capital E because it's a con
 	this.currentY = y;
 	this.inc = 1;
 	this.incrementY = incrementY;
-
 	this.update = function () {
 		if (!this.incrementY) {
 			this.currentX += this.inc;
@@ -515,23 +497,19 @@ function Enemy(x, y, range, incrementY = false) { //Capital E because it's a con
 			}
 		}
 	}
-
 	this.draw = function () {
 		this.update();
-
-		drawBat(this.currentX, this.currentY); // Draw the bat at the center
+		drawBat(this.currentX, this.currentY); // DRAW BAT ENEMY
 	}
 	this.checkContact = function (gc_X, gc_Y) {
 		var d = dist(gc_X, gc_Y, this.currentX, this.currentY)
 		return d < 50;
-
 	}
 }
 
 
-function Collectable(t_collectable) {  //Capital C because it's a constructor
+function Collectable(t_collectable) { // CAPITAL C BECAUSE IT’S A CONSTRUCTOR FUNCTION
 	this.t_collectable = t_collectable;
-
 	this.draw = function () {
 		if (this.t_collectable.isFound === false) {
 			fill(255, 215, 0);
@@ -550,7 +528,7 @@ function Collectable(t_collectable) {  //Capital C because it's a constructor
 	}
 }
 
-function createCanyons(t_canyon) {  //factory pattern
+function createCanyons(t_canyon) {  // FACTORY PATTERN
 	return {
 		t_canyon: t_canyon,
 		draw: function () {
