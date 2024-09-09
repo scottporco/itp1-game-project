@@ -1,5 +1,7 @@
 # Game Project: Base Game and Extensions
 
+link to project: https://scottporco.github.io/itp1-game-project/
+
 ## Overview
 
 This project involves the creation of a fully functional, bug-free game with several required features and optional extensions. The main tasks involve player interaction, level design, aesthetics, and ensuring the code is well-structured and error-free.
